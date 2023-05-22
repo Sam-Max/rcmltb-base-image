@@ -5,9 +5,11 @@ ENV DEBIAN_FRONTEND="noninteractive"
 
 RUN apt-get -y update && apt-get -y upgrade && \
     apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:qbittorrent-team/qbittorrent-stable && \
     add-apt-repository universe && \
     add-apt-repository multiverse && \
     add-apt-repository restricted && \
+    apt-get -y update && \
     apt-get install -y python3 python3-pip python3-lxml aria2 \
     qbittorrent-nox tzdata p7zip-full p7zip-rar xz-utils curl wget pv jq \
     ffmpeg locales neofetch git make g++ gcc automake unzip \
@@ -25,6 +27,8 @@ RUN git clone https://github.com/meganz/sdk.git --depth=1 -b v$MEGA_SDK_VERSION 
     && cd bindings/python/ && python3 setup.py bdist_wheel \
     && cd dist && ls && pip3 install --no-cache-dir megasdk-*.whl 
 
+RUN apt-get -y autoremove && apt-get -y autoclean
+
 # Install Rclone
 RUN curl https://rclone.org/install.sh | bash 
 
@@ -32,4 +36,4 @@ RUN curl https://rclone.org/install.sh | bash
 RUN locale-gen en_US.UTF-8
 ENV LANG="en_US.UTF-8" LANGUAGE="en_US:en" LC_ALL="en_US.UTF-8"
 
-RUN apt-get -y autoremove && apt-get -y autoclean
+
