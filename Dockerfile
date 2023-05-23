@@ -18,7 +18,7 @@ RUN apt-get -y update && apt-get -y upgrade && \
 
 # Installing Mega SDK Python Binding
 ENV PYTHONWARNINGS=ignore
-ENV MEGA_SDK_VERSION="4.10.0"
+ENV MEGA_SDK_VERSION="4.8.0"
 RUN git clone https://github.com/meganz/sdk.git --depth=1 -b v$MEGA_SDK_VERSION /home/sdk \
     && cd /home/sdk && rm -rf .git \
     && autoupdate -fIv && ./autogen.sh \
